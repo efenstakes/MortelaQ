@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms'
 
 
 // routing module
@@ -18,7 +19,7 @@ import { MainComponent } from './main/main.component';
                  LoginComponent, AddStaffComponent, ManageStaffComponent, DashboardComponent, MainComponent
                 ],
   imports: [
-    CommonModule, UserRoutingModule
+    CommonModule, FormsModule, UserRoutingModule
   ]
 })
 export class UserModule { }

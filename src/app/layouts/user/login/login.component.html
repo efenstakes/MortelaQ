@@ -4,7 +4,7 @@
 
     <div class="field">
       <p class="control has-icons-left has-icons-right">
-        <input class="input" type="email" placeholder="Email">
+        <input class="input" type="text" placeholder="Username" name="name" [(ngModel)]="name">
         <span class="icon is-small is-left">
           <i class="fas fa-envelope"></i>
         </span>
@@ -15,7 +15,7 @@
     </div>
     <div class="field">
       <p class="control has-icons-left">
-        <input class="input" type="password" placeholder="Password">
+        <input class="input" type="password" placeholder="Password" name="password" [(ngModel)]="password">
         <span class="icon is-small is-left">
           <i class="fas fa-lock"></i>
         </span>
@@ -23,8 +23,12 @@
     </div>
     <div class="field">
       <p class="control">
-        <a class="button  is-info is-outlined is-large is-fullwidth">Large</a>
+        <a class="button  is-info is-outlined is-large is-fullwidth" [class.is-loading]="is_loading" (click)="log_in()"> LOGIN </a>
       </p>
+    </div>
+
+    <div *ngIf="error_msg" class="notification is-danger">
+      {{ error_msg }}
     </div>
 
   </div>
