@@ -14,13 +14,14 @@ export class LoginComponent implements OnInit {
   error_msg: string = ''
   is_loading: boolean = false
 
+
   constructor(private userService: UserService) { }
 
   ngOnInit() {
   }
 
 
-  // log a user in
+  // log a user in   **Check Your Credentials And Try Again**
   log_in() {
     this.is_loading = true
     this.error_msg = ''

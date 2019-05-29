@@ -27,10 +27,17 @@
       </p>
     </div>
 
-    <div *ngIf="error_msg" class="notification is-danger">
+    <div *ngIf="error_msg" class="notification is-danger has-text-centered is-10 is-offset-2">
       {{ error_msg }}
     </div>
 
   </div>
   <div class="column"></div>
 </div>
+
+<footer class="footer">
+  <div class="content has-text-centered">
+    <a class="button is-white" routerLink="/about"> ABOUT </a>
+    <p> <strong> &copy; Mortela Q </strong> &nbsp;  2019 </p>
+  </div>
+</footer>
