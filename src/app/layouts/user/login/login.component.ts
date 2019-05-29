@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
     this.is_loading = true
     this.error_msg = ''
     console.log('log in ', this.name , ' ', this.password)
+    this.userService.log_in({ name: this.name, password: this.password })
     this.is_loading = false
   }
 

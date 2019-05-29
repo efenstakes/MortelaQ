@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms'
 
+import { NgxElectronModule } from 'ngx-electron'
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -25,6 +27,7 @@ import { AboutComponent } from './layouts/about/about.component'
     BrowserModule,
     FormsModule,
     AppRoutingModule,
+    NgxElectronModule,
 
     // internal modules
     UserModule,

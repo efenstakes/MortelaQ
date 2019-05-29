@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -50,3 +50,62 @@ app.on('activate', () => {
     createWindow()
   }
 })
+
+
+
+
+// handle events from angular
+
+// user
+
+// log in
+ipcMain.on('log-in', (event, args) => {
+  console.log('login a users')
+  event.returnValue = 'log in'
+})
+
+// log out
+ipcMain.on('log-out', (event, args) => {
+  console.log('log out a users')
+  event.returnValue = 'log in'
+})
+
+
+// add staff
+ipcMain.on('add-staff', (event, args) => {
+  console.log('add staff ')
+  event.returnValue = 'add staff now'
+})
+
+// delete staff
+ipcMain.on('delete-staff', (event, args) => {
+  console.log('delete staff ')
+  event.returnValue = 'delete staff now'
+})
+
+// edit staff
+ipcMain.on('update-staff', (event, args) => {
+  console.log('edit staff ')
+  event.returnValue = 'edit staff now'
+})
+
+
+// edit user
+ipcMain.on('update-user', (event, args) => {
+  console.log('edit user ')
+  event.returnValue = 'edit user now'
+})
+
+
+// edit user password
+ipcMain.on('update-user-password', (event, args) => {
+  console.log('edit user password')
+  event.returnValue = 'edit user now'
+})
+
+
+
+
+
+
+
