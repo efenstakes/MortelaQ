@@ -5,10 +5,9 @@ const path = require('path')
 // include internal libs/modules
 
 
-
 const db = new Sequelize({
     dialect: 'sqlite',
-    storage: './app/data/mortela-q.db',
+    storage: './mortela/data/mortela-q.db',
     define: {
         timestamps: false
     }

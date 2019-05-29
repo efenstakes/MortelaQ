@@ -1,4 +1,10 @@
+// include external libraries
 const { app, BrowserWindow, ipcMain } = require('electron')
+
+
+// include internal libraries
+const Controllers = require('./mortela/controllers')
+
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -60,8 +66,13 @@ app.on('activate', () => {
 
 // log in
 ipcMain.on('log-in', (event, args) => {
-  console.log('login a users')
-  event.returnValue = 'log in'
+  console.log('login a users with args', args)
+  // return
+  // event.returnValue =  Controllers.User.account_exists(args)   // 'log in'
+  Controllers.User.account_exists(args)
+                  .then((user)=> {
+                    event.returnValue = user
+                  })
 })
 
 // log out

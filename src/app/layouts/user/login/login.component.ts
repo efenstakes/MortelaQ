@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router  } from "@angular/router";
 
 import { UserService } from '../../../services/user.service'
 
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
   is_loading: boolean = false
 
 
-  constructor(private userService: UserService) { }
+  constructor(private router: Router, private userService: UserService) { }
 
   ngOnInit() {
   }
@@ -23,10 +24,22 @@ export class LoginComponent implements OnInit {
 
   // log a user in   **Check Your Credentials And Try Again**
   log_in() {
+    let response
     this.is_loading = true
     this.error_msg = ''
-    console.log('log in ', this.name , ' ', this.password)
-    this.userService.log_in({ name: this.name, password: this.password })
+    
+    response = this.userService.log_in({ name: this.name, password: this.password })
+    
+    if ( !response ) {
+      this.error_msg = 'Check Your Credentials And Try Again'
+    } else {
+
+      let user = response.dataValues 
+      console.log('user', user)
+      localStorage.setItem('mortela-user', JSON.stringify(user))
+      this.router.navigate(['/user/dashboard'])
+    }
+
     this.is_loading = false
   }
 
