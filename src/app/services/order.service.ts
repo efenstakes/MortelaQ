@@ -13,17 +13,17 @@ export class OrderService {
   
   // add
   add(order) {
-    return this.electronService.ipcRenderer.sendSync('add-order', { order })
+    return this.electronService.ipcRenderer.sendSync('add-order', order)
   }
 
   clear(order) {
-    return this.electronService.ipcRenderer.sendSync('clear-order', { order })
+    return this.electronService.ipcRenderer.sendSync('clear-order', order)
   }
 
 
   // delete
   delete(order) {
-    return this.electronService.ipcRenderer.sendSync('delete-order', { order })
+    return this.electronService.ipcRenderer.sendSync('delete-order', order)
   }
 
 
@@ -35,7 +35,9 @@ export class OrderService {
 
   // for a day
   all_for_day(day) {
-    return this.electronService.ipcRenderer.sendSync('all-orders-for-day', { day })
+    return this.electronService.ipcRenderer.sendSync('all-orders-for-day', day)
   }
+
+  
 
 }

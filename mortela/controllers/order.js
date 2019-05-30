@@ -26,6 +26,10 @@ exports.delete = async (id) => {
     return await Order.destroy({ where: { id: id } })
 }
 
+// clear an order
+exports.clear = async (id) => {
+    return await Order.update({ is_cleared: true }, { where: { id: order.id } })
+}
 
 // update an order
 exports.update = async (order) => {
