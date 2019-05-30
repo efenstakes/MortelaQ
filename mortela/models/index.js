@@ -1,15 +1,18 @@
-// include external libraries
+// import external libraries/modules
 
-// include internal libraries
-const User = require('./user')
-const Item = require('./item')
-const Order = require('./order')
-const OrderItem = require('./order-item')
-const Inventory = require('./inventory')
+// import internal libraries/modules
 const Expense = require('./expense')
+const Inventory = require('./inventory')
+const Product = require('./product')
+const Order = require('./order')
+const User = require('./user')
 
 
-// export the models
+// export the controllers
 module.exports = {
-    User, Item, Order, OrderItem, Inventory, Expense
+    Expense,
+    Inventory,
+    Product,
+    Order,
+    User
 }

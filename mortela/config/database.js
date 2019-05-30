@@ -1,24 +1,26 @@
 // include external libraries
-const Sequelize = require('sequelize')
+const Datastore = require('nedb-promise')
 const path = require('path')
 
 // include internal libs/modules
 
 
-const db = new Sequelize({
-    dialect: 'sqlite',
-    storage: './mortela/data/mortela-q.db',
-    define: {
-        timestamps: false
-    }
-})
+// load our database collections
+let User = new Datastore({ filename: './mortela/data/users.qdb', autoload: true })
+let Product = new Datastore({ filename: './mortela/data/products.qdb', autoload: true })
+let Order = new Datastore({ filename: './mortela/data/orders.qdb', autoload: true })
+let Inventory = new Datastore({ filename: './mortela/data/inventory.qdb', autoload: true })
+let Expense = new Datastore({ filename: './mortela/data/espenses.qdb', autoload: true })
 
-
-// test connection
-db.authenticate()
-  .then(()=> console.log('connected to db'))
-  .catch((error)=> console.log('Error ', error) )
+// 
+const db = {
+    User,
+    Product,
+    Order,
+    Inventory,
+    Expense
+}
 
 
 // export our database connection
-module.exports = db  
+module.exports = db

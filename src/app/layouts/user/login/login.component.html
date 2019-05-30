@@ -1,43 +1,43 @@
 <div class="columns is-vcentered  is-desktop">
-  <div class="column"></div>
-  <div class="column">
+    <div class="column"></div>
+    <div class="column">
 
-    <div class="field">
-      <p class="control has-icons-left has-icons-right">
-        <input class="input" type="text" placeholder="Username" name="name" [(ngModel)]="name">
-        <span class="icon is-small is-left">
+        <div class="field">
+            <p class="control has-icons-left has-icons-right">
+                <input class="input" type="text" placeholder="Username" name="name" [(ngModel)]="name">
+                <span class="icon is-small is-left">
           <i class="fas fa-envelope"></i>
         </span>
-        <span class="icon is-small is-right">
+                <span class="icon is-small is-right">
           <i class="fas fa-check"></i>
         </span>
-      </p>
-    </div>
-    <div class="field">
-      <p class="control has-icons-left">
-        <input class="input" type="password" placeholder="Password" name="password" [(ngModel)]="password">
-        <span class="icon is-small is-left">
+            </p>
+        </div>
+        <div class="field">
+            <p class="control has-icons-left">
+                <input class="input" type="password" placeholder="Password" name="password" [(ngModel)]="password">
+                <span class="icon is-small is-left">
           <i class="fas fa-lock"></i>
         </span>
-      </p>
-    </div>
-    <div class="field">
-      <p class="control">
-        <a class="button  is-info is-outlined is-large is-fullwidth" [class.is-loading]="is_loading" (click)="log_in()"> LOGIN </a>
-      </p>
-    </div>
+            </p>
+        </div>
+        <div class="field">
+            <p class="control">
+                <a class="button  is-info is-outlined is-large is-fullwidth" [class.is-loading]="is_loading" (click)="log_in()"> LOGIN </a>
+            </p>
+        </div>
 
-    <div *ngIf="error_msg" class="notification is-danger has-text-centered is-10 is-offset-2">
-      {{ error_msg }}
-    </div>
+        <div *ngIf="error_msg" class="notification is-danger has-text-centered is-10 is-offset-2">
+            {{ error_msg }}
+        </div>
 
-  </div>
-  <div class="column"></div>
+    </div>
+    <div class="column"></div>
 </div>
 
 <footer class="footer">
-  <div class="content has-text-centered">
-    <a class="button is-white" routerLink="/about"> ABOUT </a>
-    <p> <strong> &copy; Mortela Q </strong> &nbsp;  2019 </p>
-  </div>
+    <div class="content has-text-centered">
+        <a class="button is-white" routerLink="/about"> ABOUT </a>
+        <p> <strong> &copy; Mortela Q </strong> &nbsp; 2019 </p>
+    </div>
 </footer>

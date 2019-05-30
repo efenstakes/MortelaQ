@@ -1,36 +1,48 @@
 // include external libraries
-const Sequelize = require('sequelize')
-
-// include internal libs/modules
-const db = require('../config/database')
 
 
-
-const Inventory = db.define('inventory', {
-    made_on: {
-        type: Sequelize.DATE, 
-        defaultValue: new Date()
-    },
-    item: {
-        type: Sequelize.TEXT,
-        allowNull: false 
-    },
-    cost: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-    },
-    quantity: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-    },
-    manager_id: {
-        type: Sequelize.INTEGER
-    }
-})
+// include internal libraries/modules
+const Models = require('../config/database')
+const Inventory = Models.Inventory
 
 
-// create the table
-// Inventory.sync({ force: true })
 
-// export the model
-module.exports = Inventory
+// add an inventory
+exports.add = async(inventory) => {
+    return Inventory.insert({
+        name: inventory.name,
+        cost: inventory.cost,
+        quantity: inventory.quantity,
+        category: inventory.category,
+        type: inventory.type
+    })
+}
+
+// delete an inventory
+exports.delete = async(id) => {
+    return await Inventory.remove({ _id: id })
+}
+
+
+// update an inventory
+exports.update = async(inventory) => {
+    return await Inventory.update({ _id: id }, {
+        $set: {
+            cost: inventory.cost,
+            quantity: inventory.quantity,
+            category: inventory.category,
+            type: inventory.type
+        }
+    })
+}
+
+
+// get an inventory details by id 
+exports.details = async(id) => {
+    return await Inventory.findOne({ _id: id })
+}
+
+// get all inventories  
+exports.all = async() => {
+    return await Inventory.find({})
+}
