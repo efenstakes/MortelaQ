@@ -1,3 +1,118 @@
-<p>
-  view works!
-</p>
+<!-- the top nav bar -->
+<section class="section">
+
+  <div class="columns">
+    <div class="column is-3 is-offset-1">
+       <a class="button is-info is-outlined" id="back_btn" (click)="go_back()"> BACK </a>
+       <br><br>  
+       <p id="logo"> MORTELLA Q </p>
+    </div>
+    <div class="column is-2 is-offset-1"></div>
+    <div class="column is-3 is-offset-1">
+      
+      <div class="columns">
+          <div class="column is-5 is-offset-1">
+              <figure class="image is-128x128">
+                  <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
+              </figure>
+          </div>
+          <div class="column is-5 is-offset-1">
+            <br>
+            <p><strong> name </strong></p>
+            <p><strong> role </strong></p>
+            <button class="button is-danger is-outlined" (click)="log_out()"> LOGOUT </button>
+          </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+
+<div class="columns is-mobile">
+  <div class="column is-offset-1">
+    <P> SUMMARY </P>
+
+    <p> Number Of Orders: {{ orders.orders.length }} </p>
+    <p> Orders Cost: {{ orders.orders.length }} </p>
+
+  </div>
+  <div class="column"></div>
+  <div class="column"></div>
+  
+  <!-- order filters -- filter which orders to see for today, yesterday etc date -->
+  <div class="column">
+    
+    <br><br>
+    <div class="field">
+      <div class="control">
+        <div class="select is-info">
+          <select (change)="filter_orders($event)">
+            <option disabled> Filter Orders </option>
+            <option disabled> Recently </option>
+            <option selected> TODAY </option>
+            <option> THIS WEEK </option>
+            <option> THIS MONTH </option>
+            <option disabled> By Dates </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- show the orders -->
+<section class="section columns is-mobile is-multiline">
+  
+  <div class="column is-3" *ngFor="let num of [1, 2, 3, 4, 5, 6, 7, 8, 3, 4,5]">
+    <div class="card" >
+      <!--
+      <header class="card-header">
+        <p class="card-header-title">
+          
+        </p>
+        <a href="#" class="card-header-icon" aria-label="more options">
+          <span class="icon">
+            <i class="fas fa-angle-down" aria-hidden="true"></i>
+          </span>
+        </a>
+      </header>
+      -->
+      <div class="card-content">
+        <div class="content">
+          
+          <p> Order #${{2}} </p>
+          <p> Cashier #${{2}} </p>
+          <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+
+          <br><br>
+          <p> ITEMS </p>
+          <!-- order item list -->
+          
+          <br>
+
+        </div>
+      </div>
+      <footer class="card-footer">
+        <a href="#" class="card-footer-item">Save</a>
+        <a href="#" class="card-footer-item">Edit</a>
+        <a href="#" class="card-footer-item">Delete</a>
+      </footer>
+    </div>
+  </div>
+
+</section>
+
+<!-- app footer -->
+<section class="section" style="max-height: 100px; height: 50px">
+  <div class="container">
+    <footer class="footer">
+      <div class="content has-text-centered">
+          <a class="button is-white" routerLink="/about"> ABOUT </a>
+          <p> <strong> &copy; Mortela Q </strong> &nbsp; 2019 </p>
+      </div>
+    </footer>
+  </div>
+</section>
