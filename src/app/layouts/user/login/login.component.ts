@@ -34,15 +34,16 @@ export class LoginComponent implements OnInit {
       this.error_msg = 'Check Your Credentials And Try Again'
     } else {
 
-      let user = response.dataValues 
-      console.log('user', user)
-      localStorage.setItem('mortela-user', JSON.stringify(user))
-      this.router.navigate(['/user/dashboard'])
+      console.log('user', response)
+      localStorage.setItem('mortela-user', JSON.stringify(response))
+      setTimeout(()=> this.router.navigate(['/user/dashboard']), 700)
+      
     }
-
-    this.is_loading = false
+    setTimeout(()=> this.is_loading = false, 1000)
   }
 
-
+  t() {
+    
+  }
 
 }

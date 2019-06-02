@@ -1,3 +1,195 @@
-<p>
-  manage-staff works!
-</p>
+<!-- the top nav bar -->
+<app-top-nav [user]="user"></app-top-nav>
+
+
+<!-- show the penalties summary and filter components -->
+<div class="columns is-mobile">
+  <div class="column is-offset-1">
+    <P> SUMMARY </P>
+
+    <p> {{ staff.all.length }} STAFF FOUND </p>
+    <p> {{ staff.staff.length }} STAFF IN VIEW </p>
+
+  </div>
+  <div class="column"></div>
+  <div class="column"></div>
+  
+  <!-- order filters -- filter which penalties to see for today, yesterday etc date -->
+  <div class="column">
+
+    <br><br>
+    <div class="field">
+      <div class="control">
+        <div class="select is-info">
+          <select (change)="filter($event)">
+            <option disabled> Filter </option>
+            <option selected> ALL </option>
+            <option> MANAGER </option>
+            <option> CASHIER </option>
+            <option> ADMINISTRATOR </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<!-- show the penalties -->
+<section class="section columns is-mobile is-multiline">
+  
+  
+  <div class="column is-3" *ngFor="let staff of staff.staff">
+    <div class="card" >
+      <div class="card-content">
+        <div class="content">
+          
+          <p> Name {{ staff.name }} </p>
+          <p> Role {{ staff.role }} </p>
+          <p> Salary {{ staff.salary | currency:'Ksh.' }} </p>
+          <time> Since {{ staff.added_on | date:'dd-MM-yyyy'  }} </time>
+
+          <br>
+
+        </div>
+      </div>
+      <footer class="card-footer">
+        <a (click)="show_edit_modal(staff)" class="card-footer-item button is-info"> EDIT </a>
+        <a (click)="delete_staff(staff._id)" class="card-footer-item button is-danger"> DELETE </a>
+      </footer>
+    </div>
+  </div>
+  <br>
+
+</section>
+
+<section>
+  <div class="columns">
+    <div class="column"></div>
+    <div class="column">
+      <!-- add the penalty button -->
+      <button class="button is-info is-fullwidth" (click)="show_add_modal()"> ADD STAFF </button>
+    </div>
+    <div class="column"></div>
+  </div>
+</section>
+
+<!-- app footer -->
+<app-footer></app-footer>
+
+
+
+<!-- the modal to edit staff  -->
+<div class="modal" [class.is-active]="show_staff_edit_modal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title has-text-centered"> EDIT {{ staff_in_edit.name }} </p>
+      <button class="delete" aria-label="close" (click)="close_edit_modal()"></button>
+    </header>
+    <section class="modal-card-body" style="margin: 10px 0px;">
+      
+      <div class="field">
+        <label class="label"> Name </label>
+        <div class="control">
+          <input class="input is-info" type="text" placeholder="Enter name" name="username" [(ngModel)]="staff_in_edit.name">
+        </div>
+      </div>
+      
+      <div class="field">
+        <label class="label"> Salary </label>
+        <div class="control">
+          <input class="input is-info" type="text" placeholder="Enter Salary" name="salary" [(ngModel)]="staff_in_edit.salary">
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label"> Staff Role </label>
+        <div class="control">
+          <select name="role" [(ngModel)]="staff_in_edit.role">
+            <option> ADMINISTRATOR </option>
+            <option> MANAGER </option>
+            <option> CASHIER </option>
+          </select>
+        </div>
+      </div>
+
+      <br>
+      {{ staff_in_edit.name }} <br>
+      {{ staff_in_edit.role }} <br>
+      {{ staff_in_edit.salary }}
+
+      <div class="columns">
+        <div class="column"></div>
+        <div class="column">
+          <!-- update the staff -->
+          <button class="button is-info is-fullwidth" (click)="edit_staff()"> SAVE </button>
+        </div>
+        <div class="column"></div>
+      </div>
+      
+    </section>
+  </div>
+</div>
+
+
+<!-- the modal to add staff  -->
+<div class="modal" [class.is-active]="show_staff_add_modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title has-text-centered"> ADD STAFF </p>
+        <button class="delete" aria-label="close" (click)="close_add_modal()"></button>
+      </header>
+      <section class="modal-card-body" style="margin: 10px 0px;">
+        
+        <div class="field">
+          <label class="label"> Name </label>
+          <div class="control">
+            <input class="input is-info" type="text" placeholder="Enter name" name="new_username" [(ngModel)]="staff_in_edit.name">
+          </div>
+        </div>
+        
+        <div class="field">
+          <label class="label"> Salary </label>
+          <div class="control">
+            <input class="input is-info" type="text" placeholder="Enter Salary" name="new_salary" [(ngModel)]="staff_in_edit.salary">
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label"> Password </label>
+          <div class="control">
+            <input class="input is-info" type="password" placeholder="Enter Password" name="new_salary" [(ngModel)]="staff_in_edit.password">
+          </div>
+        </div>
+  
+        <div class="field">
+          <label class="label"> Staff Role </label>
+          <div class="control">
+            <select name="new_role" [(ngModel)]="staff_in_edit.role">
+              <option> ADMINISTRATOR </option>
+              <option> MANAGER </option>
+              <option> CASHIER </option>
+            </select>
+          </div>
+        </div>
+  
+        <br>
+        <div class="notification is-danger" *ngIf="staff_add_error">
+            Staff Cound Not Be Added Successfully. Try Again.
+        </div>
+        <div class="notification is-success" *ngIf="staff_add_success">
+            Staff Added Successfully
+        </div>
+        <br>
+
+        <!-- add the penalty button -->
+        <button class="button is-info is-fullwidth" (click)="add_staff()"> SAVE </button>
+  
+        
+      </section>
+    </div>
+  </div>

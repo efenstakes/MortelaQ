@@ -2,31 +2,41 @@
     <div class="column"></div>
     <div class="column">
 
+        <!-- name field -->
         <div class="field">
+            <label class="label"> Enter Your Name </label>
             <p class="control has-icons-left has-icons-right">
-                <input class="input" type="text" placeholder="Username" name="name" [(ngModel)]="name">
+                <input class="input is-info" type="text" placeholder="Username" name="name" [(ngModel)]="name">
                 <span class="icon is-small is-left">
-          <i class="fas fa-envelope"></i>
-        </span>
+                    <i class="fas fa-envelope"></i>
+                </span>
                 <span class="icon is-small is-right">
-          <i class="fas fa-check"></i>
-        </span>
+                    <i class="fas fa-check"></i>
+                </span>
             </p>
         </div>
+        
+        <!-- password field -->
         <div class="field">
+            <label class="label"> Enter Your Password </label>
             <p class="control has-icons-left">
-                <input class="input" type="password" placeholder="Password" name="password" [(ngModel)]="password">
+                <input class="input is-info" type="password" placeholder="Password" name="password" [(ngModel)]="password">
                 <span class="icon is-small is-left">
-          <i class="fas fa-lock"></i>
-        </span>
+                    <i class="fas fa-lock"></i>
+                </span>
             </p>
         </div>
+        <br>
+
+        <!-- submit the form -->
         <div class="field">
             <p class="control">
-                <a class="button  is-info is-outlined is-large is-fullwidth" [class.is-loading]="is_loading" (click)="log_in()"> LOGIN </a>
+                <a class="button  is-info is-outlined is-large is-fullwidth" [class.is-loading]="is_loading"
+                    (click)="log_in()"> LOGIN </a>
             </p>
         </div>
 
+        <!-- show errors if any -->
         <div *ngIf="error_msg" class="notification is-danger has-text-centered is-10 is-offset-2">
             {{ error_msg }}
         </div>
@@ -35,9 +45,6 @@
     <div class="column"></div>
 </div>
 
-<footer class="footer">
-    <div class="content has-text-centered">
-        <a class="button is-white" routerLink="/about"> ABOUT </a>
-        <p> <strong> &copy; Mortela Q </strong> &nbsp; 2019 </p>
-    </div>
-</footer>
+
+<!-- include app nav -->
+<app-footer></app-footer>

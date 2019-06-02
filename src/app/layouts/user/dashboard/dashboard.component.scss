@@ -2,3 +2,20 @@
 nav {
     background-color: turquoise;
 }
+
+.long_display {
+    height: 60ex;
+}
+
+#product_list, #order_details {
+    background-color: whitesmoke;
+    min-height: 400%;
+}
+
+#logo {
+    font-size: 3ex;
+}
+
+tr {
+    margin-top: 5px;
+}

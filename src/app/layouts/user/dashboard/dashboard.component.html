@@ -1,26 +1,227 @@
-<nav class="level is-info">
-  <p class="level-item has-text-centered">
-    <a class="link is-info">Home</a>
-  </p>
-  <p class="level-item has-text-centered">
-    <a class="link is-info">Menu</a>
-  </p>
-  <p class="level-item has-text-centered">
-    <img src="https://bulma.io/images/bulma-type.png" alt="" style="height: 30px;">
-  </p>
-  <p class="level-item has-text-centered">
-    <a class="link is-info">Reservations</a>
-  </p>
-  <p class="level-item has-text-centered">
-    <a class="link is-info">Contact</a>
-  </p>
-</nav>
-<div class="container">
+<!-- app top anv bar -->
+<app-top-nav [user]="user"></app-top-nav>
 
-
-  <div class="columns">
-    <div class="column is-7 is-offset-1">is-three-quarters</div>
-    <div class="column is-3 is-offset-1">Auto</div>
+<div class="columns">
+  <div class="column is-6 is-offset-1">
+      <h1><strong> PRODUCTS </strong></h1>
+      <br>
+      <div class="columns">
+          <div class="column is-9">
+              <input class="input is-fullwidth" type="text" placeholder="Search An Item" [(ngModel)]="search_term">
+          </div>
+          <div class="column is-4">
+            
+              <div class="field">
+                <div class="control">
+                  <div class="select is-info">
+                    <select (change)="filter_products($event)">
+                      <option disabled> Filter </option>
+                      <option selected> ALL </option>
+                      <option> LUNCH </option>
+                      <option> BREAKFAST </option>
+                      <option> FOODS </option>
+                      <option> DRINKS </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+          </div>
+      </div>
   </div>
-
+  <div class="column is-3 is-offset-1">
+      <h1><strong> ORDER ITEMS </strong></h1>
+  </div>          
 </div>
+<div class="columns">
+  <!-- the list of products -->
+  <div class="column is-6 is-offset-1 long_display">
+
+      <table class="table is-fullwidth is-hoverable">
+          <thead>
+            <tr class="">
+              <th class=""><abbr title="Name"> Name </abbr></th>
+              <th class=""><abbr title="Cost"> Cost </abbr></th>
+              <th class=""><abbr title="Quantity"> Quantity </abbr></th>
+            </tr>
+          </thead>
+          <tbody id="product_list">
+
+            <tr *ngFor="let product of products.products">
+              <td> {{ product.name }} </td>
+              <td> {{ product.cost }} </td>
+              <td> {{ product.quantity }} </td>
+            </tr>
+
+          </tbody>
+      </table>
+
+      <div *ngIf="products.products.length == 0">
+        <p class="has-text-centered"> There Are No Items For Sale Yet </p>
+      </div>
+
+
+  </div>
+  <!-- details of the order currently being placed -->
+  <div class="column is-3 is-offset-1 long_display" id="order_details">
+    
+    <p class="has-text-centered" *ngIf="order.items.length < 1">
+      <i> No Order Placed Yet </i> 
+    </p>
+    
+  </div>
+</div>
+<div class="columns">
+  <div class="column is-6 is-offset-1">
+
+    <div class="field is-grouped">
+      <p class="control">
+        <a class="button is-info is-outlined"  (click)="see_my_sales()">
+          MY SALES
+        </a>
+      </p>
+      <p class="control">
+        <a class="button is-info is-outlined" (click)="clear_order_modal()">
+            CLEAR AN ORDER
+        </a>
+      </p>
+    </div>
+
+  </div>
+  <div class="column is-3 is-offset-1">
+
+    <p> Number Of Items: {{ order.items.length }} </p>
+    <p> Cost Of Items: cost </p><br>
+    <button class="button is-info is-fullwidth" (click)="print_order()"> PRINT ORDER </button>
+
+  </div>
+</div>
+
+<!-- show admin functions if the logged in user is an admin or manager -->
+<!-- <div class="columns" *ngIf="user.role == 'MANAGER' || user.role == 'ADMIN'"> -->
+<div class="columns" *ngIf="user.role == 'MANAGER' || user.role == 'ADMIN'">
+    <div class="column is-6 is-offset-1">
+      <div class="field is-grouped">
+        <p class="control">
+          <a class="button is-info is-outlined"  routerLink="/user/manage"> 
+            MANAGE STAFF
+          </a>
+        </p>
+        <p class="control">
+          <a class="button is-info is-outlined"  routerLink="/order/view"> 
+            VIEW SALES
+          </a>
+        </p>
+        <p class="control">
+          <a class="button is-info is-outlined" routerLink="/inventory/view">
+            VIEW IVENTORY
+          </a>
+        </p>
+        <p class="control">
+          <a class="button is-info is-outlined" (click)="go_to_expenses()">
+            VIEW EXPENSES
+          </a>
+        </p>
+        <p class="control">
+          <a class="button is-info is-outlined"  routerLink="/penalty/view">
+            VIEW PENALTIES
+          </a>
+        </p>
+        <p class="control">
+          <a class="button is-info is-outlined"  routerLink="/product/view">
+            VIEW PRODUCTS
+          </a>
+        </p>
+      </div>
+
+    </div>
+</div>
+
+
+<!-- app footer -->
+<app-footer></app-footer>
+
+
+<!-- the clear order modal -->
+<div class="modal" [class.is-active]="show_clear_order_modal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title has-text-centered"> UNCLEARED ORDERS </p>
+      <button class="delete" aria-label="close" (click)="close_clear_o_modal()"></button>
+    </header>
+    <section class="modal-card-body">
+      
+      <div class="field">
+        <div class="control">
+          <input class="input is-info" type="text" placeholder="Enter Order Number" (keyup)="search_order($event)">
+        </div>
+      </div>
+
+      <div class="columns" *ngFor="let order of matched_orders">
+          <div class="column">
+            {{ order.table_no }}
+          </div>
+          <div class="column">
+            {{ order.total }}
+          </div>
+          <div class="column">
+            <button class="button is-info" (click)="clear_order(order.id)"> CLEAR ORDER </button>
+          </div>
+      </div>
+      <p class="has-text-centered" *ngIf="matched_orders.length == 0"> No Orders Found </p>
+
+      
+    </section>
+    <!-- 
+    <footer class="modal-card-foot">
+      <button class="button is-info">Save changes</button> 
+    </footer>
+    -->
+  </div>
+</div>
+
+
+<!-- the modal to add a penalty  
+<div class="modal" [class.is-active]="show_add_penalty_modal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title has-text-centered"> ADD PENALTY </p>
+      <button class="delete" aria-label="close" (click)="close_penalty_modal()"></button>
+    </header>
+    <section class="modal-card-body" style="margin: 10px 0px;">
+      
+      <div class="field">
+        <label class="label"> Item Damaged </label>
+        <div class="control">
+          <input class="input is-info" type="text" placeholder="Enter Item" [(ngModel)]="penalty.item">
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label"> Item Cost </label>
+        <div class="control">
+          <input class="input is-info" type="text" placeholder="Enter Cost" [(ngModel)]="penalty.cost">
+        </div>
+      </div>
+      
+      <div class="field">
+        <label class="label"> Item Description </label>
+        <div class="control">
+          <textarea class="textarea is-info" placeholder="Enter Description" [(ngModel)]="penalty.description"></textarea>
+        </div>
+      </div>
+      <br>
+
+      <button class="button is-info is-fullwidth" (click)="add_penalty()"> ADD </button>
+
+      
+    </section>
+    
+    <footer class="modal-card-foot">
+      <button class="button is-info">Save changes</button> 
+    </footer>
+    
+  </div>
+</div>
+-->

@@ -21,18 +21,24 @@ export class UserService {
 
   // add a new user
   add_staff(user) {
-    return this.electronService.ipcRenderer.sendSync('add-staff', user)
+    return this.electronService.ipcRenderer.sendSync('add-staff', { user, manager: this.get_current_user() })
   }
 
   // delete staff
-  delete_staff(user) {
-    return this.electronService.ipcRenderer.sendSync('delete-staff', user)
+  delete_staff(id) {
+    return this.electronService.ipcRenderer.sendSync('delete-staff', { id, manager: this.get_current_user()})
   }
 
   // update staff
   update_staff(user) {
-    return this.electronService.ipcRenderer.sendSync('update-staff', user)
+    return this.electronService.ipcRenderer.sendSync('update-staff', { user, manager: this.get_current_user() })
   }
+  
+  // get all staff
+  get_all_staff() {
+    return this.electronService.ipcRenderer.sendSync('get-all-staff', {})
+  }
+
   // edit user details
   update_user(user) {
     return this.electronService.ipcRenderer.sendSync('update-user', user)
@@ -41,6 +47,15 @@ export class UserService {
   // edit user password
   update_password(user, new_password) {
     return this.electronService.ipcRenderer.sendSync('update-user-password', { user, new_password })
+  }
+
+  
+
+  // get the current user
+  get_current_user(){
+    return JSON.parse(localStorage.getItem('mortela-user')) ? 
+               JSON.parse(localStorage.getItem('mortela-user')) : 
+               { id: '', name: '', role: '' }
   }
 
 
