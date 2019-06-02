@@ -1,3 +1,260 @@
-<p>
-  view works!
-</p>
+<!-- the top nav bar -->
+<app-top-nav [user]="user"></app-top-nav>
+
+
+<!-- show the penalties summary and filter components -->
+<div class="columns is-mobile">
+  <div class="column is-offset-1">
+    <P> SUMMARY </P>
+
+    <p> {{ summary.count }} Product(s) </p>
+    <p> Product Cost: {{ summary.cost | currency:'Ksh. ' }} </p>
+
+  </div>
+  <div class="column"></div>
+  <div class="column"></div>
+  
+  <!-- order filters -- filter which penalties to see for today, yesterday etc date -->
+  <div class="column">
+
+    <br><br>
+    <div class="field">
+      <div class="control">
+        <div class="select is-info">
+          <select (change)="filter($event)">
+            <option disabled> Filter Orders </option>
+            <option disabled> Recently </option>
+            <option> ALL </option>
+            <option> TODAY </option>
+            <option> THIS WEEK </option>
+            <option> THIS MONTH </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<!-- show the penalties -->
+<section class="section columns is-mobile is-multiline">
+  
+  <div class="column is-3" *ngFor="let product of products.products">
+    <div class="card" >
+      <div class="card-content">
+        <div class="content">
+          
+          <p> Name: {{ product.name | titlecase }} </p>
+          <p> Cost: {{ product.cost | currency:'Ksh.' }} </p>
+          <p> Quantity: {{ product.quantity }} </p>
+          <time datetime="2016-1-1"> Date: {{ product.added_on | date:'dd-mm-yyy' }} </time>
+
+        </div>
+      </div>
+      <footer class="card-footer">
+        <a (click)="edit_modal(product)" class="card-footer-item button is-info is-outlined is-fullwidth"> Edit </a>
+        <a (click)="delete(product._id)" class="card-footer-item button is-danger is-outlined is-fullwidth"> Delete </a>
+      </footer>
+    </div>
+  </div>
+
+  <p class="has-text-centered" *ngIf="products.products.length == 0"> No Products In The Store Yet  </p>
+
+</section>
+
+<section>
+  <div class="columns">
+    <div class="column"></div>
+    <div class="column">
+      <!-- add the penalty button -->
+      <button class="button is-info is-fullwidth" (click)="add_modal()"> ADD PRODUCT </button>
+    </div>
+    <div class="column"></div>
+  </div>
+</section>
+  
+
+<!-- app footer -->
+<app-footer></app-footer> 
+
+
+
+
+<!-- the modal to add  -->
+<div class="modal" [class.is-active]="show_add_modal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title has-text-centered"> ADD PRODUCT </p>
+      <button class="delete" aria-label="close" (click)="close_add_modal()"></button>
+    </header>
+    <section class="modal-card-body" style="margin: 10px 0px;">
+      
+      <div class="field">
+        <label class="label"> Name </label>
+        <div class="control">
+          <input class="input is-info" type="text" placeholder="Enter name" name="in_name" [(ngModel)]="edit_product.name">
+        </div>
+      </div>
+      
+      <div class="field">
+        <label class="label"> Cost </label>
+        <div class="control">
+          <input class="input is-info" type="text" placeholder="Enter Cost" name="cost" [(ngModel)]="edit_product.cost">
+        </div>
+      </div>
+      
+      <div class="field">
+        <label class="label"> Quantity </label>
+        <div class="control">
+          <input class="input is-info" type="number" placeholder="Enter Quantity" name="quantity" [(ngModel)]="edit_product.quantity">
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <div class="select is-info is-fullwidth">
+            <select [(ngModel)]="edit_product.meal">
+              <option disabled selected> SELECT MEAL </option>
+              <option> BREAKFAST </option>
+              <option> LUNCH </option>
+              <option> DINNER </option>
+              <option selected> ALL </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <div class="select is-info is-fullwidth">
+            <select [(ngModel)]="edit_product.category">
+              <option disabled selected> SELECT CATEGORY </option>
+              <option selected> FOODS </option>
+              <option> DRINKS </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <div class="select is-info is-fullwidth">
+            <select [(ngModel)]="edit_product.type">
+              <option disabled selected> SELECT TYPE </option>
+              <option> SNACK </option>
+              <option> DRINK </option>
+              <option selected> FOOD </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <br>
+      <div class="notification is-danger" *ngIf="show_msg == 'ERROR'">
+          Product Cound Not Be Added Successfully. Try Again.
+      </div>
+      <div class="notification is-success" *ngIf="show_msg == 'SUCCESS'">
+          Product Added Successfully
+      </div>
+      <br>
+
+      <!-- add the penalty button -->
+      <button class="button is-info is-fullwidth" (click)="add()"> SAVE </button>
+
+      
+    </section>
+  </div>
+</div>
+
+
+
+
+<!-- the modal to edit a product  -->
+<div class="modal" [class.is-active]="show_edit_modal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title has-text-centered"> EDIT PRODUCT </p>
+      <button class="delete" aria-label="close" (click)="close_edit_modal()"></button>
+    </header>
+    <section class="modal-card-body" style="margin: 10px 0px;">
+      
+      <div class="field">
+        <label class="label"> Name </label>
+        <div class="control">
+          <input class="input is-info" type="text" placeholder="Enter name" name="in_name" [(ngModel)]="edit_product.name">
+        </div>
+      </div>
+      
+      <div class="field">
+        <label class="label"> Cost </label>
+        <div class="control">
+          <input class="input is-info" type="text" placeholder="Enter Cost" name="cost" [(ngModel)]="edit_product.cost">
+        </div>
+      </div>
+      
+      <div class="field">
+        <label class="label"> Quantity </label>
+        <div class="control">
+          <input class="input is-info" type="number" placeholder="Enter Quantity" name="quantity" [(ngModel)]="edit_product.quantity">
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <div class="select is-info is-fullwidth">
+            <select [(ngModel)]="edit_product.meal">
+              <option disabled selected> SELECT MEAL </option>
+              <option> BREAKFAST </option>
+              <option> LUNCH </option>
+              <option> DINNER </option>
+              <option selected> ALL </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <div class="select is-info is-fullwidth">
+            <select [(ngModel)]="edit_product.category">
+              <option disabled selected> SELECT CATEGORY </option>
+              <option selected> FOODS </option>
+              <option> DRINKS </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <div class="select is-info is-fullwidth">
+            <select [(ngModel)]="edit_product.type">
+              <option disabled selected> SELECT TYPE </option>
+              <option> SNACK </option>
+              <option> DRINK </option>
+              <option selected> FOOD </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <br>
+      <div class="notification is-danger" *ngIf="show_msg == 'ERROR'">
+          Product Cound Not Be Updated Successfully. Try Again.
+      </div>
+      <div class="notification is-success" *ngIf="show_msg == 'SUCCESS'">
+          Product Updated Successfully
+      </div>
+      <br>
+
+      <!-- edit the penalty button -->
+      <button class="button is-info is-fullwidth" (click)="edit()"> SAVE </button>
+
+      
+    </section>
+  </div>
+</div>

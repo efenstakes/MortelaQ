@@ -2,10 +2,8 @@ import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 
 
-
 // module views
 import { ViewComponent } from './view/view.component';
-import { AddComponent } from './add/add.component';
 import { MainComponent } from './main/main.component';
 
 const routes: Routes = [
@@ -13,8 +11,7 @@ const routes: Routes = [
            path: 'product', component: MainComponent,
 
            children: [
-                { path: 'view', component: ViewComponent },
-                { path: 'add', component: AddComponent }
+                { path: 'view', component: ViewComponent }
            ]
        }
 ]
