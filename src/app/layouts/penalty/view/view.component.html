@@ -1,3 +1,148 @@
-<p>
-  view works!
-</p>
+<!-- the top nav bar -->
+<app-top-nav [user]="user"></app-top-nav>
+
+
+<!-- show the penalties summary and filter components -->
+<div class="columns is-mobile">
+  <div class="column is-offset-1">
+    <P> SUMMARY </P>
+
+    <p> {{ summary.count }} Penaltie(s) </p>
+    <p> Penalty Cost: {{ summary.cost | currency:'Ksh. ' }} </p>
+
+  </div>
+  <div class="column"></div>
+  <div class="column"></div>
+  
+  <!-- order filters -- filter which penalties to see for today, yesterday etc date -->
+  <div class="column">
+
+    <br><br>
+    <div class="field">
+      <div class="control">
+        <div class="select is-info">
+          <select (change)="filter($event)">
+            <option disabled> Filter Orders </option>
+            <option disabled> Recently </option>
+            <option> ALL </option>
+            <option> TODAY </option>
+            <option> THIS WEEK </option>
+            <option> THIS MONTH </option>
+            <option disabled> By Staff </option>
+            <option *ngFor="let staff of all_staff"> {{ staff.name }} </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<!-- show the penalties -->
+<section class="section columns is-mobile is-multiline">
+  
+  
+  <div class="column is-3" *ngFor="let penalty of penalties.penalties">
+    <div class="card" >
+      <div class="card-content">
+        <div class="content">
+          
+          <p> Item: {{ penalty.item }} </p>
+          <p> Cost: {{ penalty.cost | currency:'Ksh.' }} </p>
+          <p> Description: {{ penalty.description }} </p>
+          <time datetime="2016-1-1"> Date: {{ penalty.added_on | date:'dd-mm-yyy' }} </time>
+
+          <br>
+          <p><strong> STAFF </strong></p>
+          <p> {{ penalty.staff.name | titlecase }} </p>
+
+        </div>
+      </div>
+      <footer class="card-footer">
+        <a (click)="delete(penalty._id)" class="card-footer-item button is-danger is-fullwidth"> Delete </a>
+      </footer>
+    </div>
+  </div>
+
+  <p class="has-text-centered" *ngIf="penalties.penalties.length == 0"> No Penalties In The Store Yet  </p>
+
+</section>
+
+<section>
+  <div class="columns">
+    <div class="column"></div>
+    <div class="column">
+      <!-- add the penalty button -->
+      <button class="button is-info is-fullwidth" (click)="add_modal()"> ADD PENALTY </button>
+    </div>
+    <div class="column"></div>
+  </div>
+</section>
+  
+
+<!-- app footer -->
+<app-footer></app-footer> 
+
+
+
+
+<!-- the modal to add  -->
+<div class="modal" [class.is-active]="show_add_modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title has-text-centered"> ADD EXPENSE </p>
+        <button class="delete" aria-label="close" (click)="close_add_modal()"></button>
+      </header>
+      <section class="modal-card-body" style="margin: 10px 0px;">
+        
+        <div class="field">
+          <label class="label"> Item </label>
+          <div class="control">
+            <input class="input is-info" type="text" placeholder="Enter name" name="in_name" [(ngModel)]="edit_penalty.item">
+          </div>
+        </div>
+        
+        <div class="field">
+          <label class="label"> Cost </label>
+          <div class="control">
+            <input class="input is-info" type="text" placeholder="Enter Cost" name="cost" [(ngModel)]="edit_penalty.cost">
+          </div>
+        </div>
+        
+        <div class="field">
+          <label class="label"> Description </label>
+          <div class="control">
+            <textarea class="textarea is-info" placeholder="Enter Quantity" name="quantity" [(ngModel)]="edit_penalty.description"></textarea>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="control">
+            <div class="select is-info is-fullwidth">
+              <select [(ngModel)]="edit_penalty.staff">
+                <option disabled selected> SELECT STAFF </option>
+                <option *ngFor="let staff of all_staff"> {{ staff.name }} </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <br>
+        <div class="notification is-danger" *ngIf="show_msg == 'ERROR'">
+            Penalty Cound Not Be Added Successfully. Try Again.
+        </div>
+        <div class="notification is-success" *ngIf="show_msg == 'SUCCESS'">
+            Penalty Added Successfully
+        </div>
+        <br>
+
+        <!-- add the penalty button -->
+        <button class="button is-info is-fullwidth" (click)="add()"> SAVE </button>
+  
+        
+      </section>
+    </div>
+  </div>
