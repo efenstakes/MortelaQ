@@ -1,3 +1,148 @@
-<p>
-  view works!
-</p>
+<!-- the top nav bar -->
+<app-top-nav [user]="user"></app-top-nav>
+
+
+<!-- show the inventory summary and filter components -->
+<div class="columns is-mobile">
+  <div class="column is-offset-1">
+    <P> SUMMARY </P>
+
+    <p> {{ summary.count }} Expense Items </p>
+    <p> Expense Cost: {{ summary.cost | currency:'Ksh. ' }} </p>
+
+  </div>
+  <div class="column"></div>
+  <div class="column"></div>
+  
+  <!-- order filters -- filter which inventory to see for today, yesterday etc date -->
+  <div class="column">
+
+    <br><br>
+    <div class="field">
+      <div class="control">
+        <div class="select is-info">
+          <select (change)="filter($event)">
+            <option disabled> Filter Orders </option>
+            <option disabled> Recently </option>
+            <option selected> TODAY </option>
+            <option> THIS WEEK </option>
+            <option> THIS MONTH </option>
+            <option disabled> By Dates </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<!-- show the inventory -->
+<section class="section columns is-mobile is-multiline">
+  
+  
+  <div class="column is-3" *ngFor="let inventory of inventory.inventory">
+    <div class="card" >
+      <div class="card-content">
+        <div class="content">
+          
+          <p> Item: {{ inventory.name }} </p>
+          <p> Cost: {{ inventory.cost | currency:'Ksh.' }} </p>
+          <p> Quantity: {{ inventory.quantity }} </p>
+          <p> Category: {{ inventory.category }} </p>
+          <p> Type: {{ inventory.type }} </p>
+          <time datetime="2016-1-1"> {{ inventory.added_on }} </time>
+
+        </div>
+      </div>
+      <footer class="card-footer">
+        <a (click)="delete(inventory._id)" class="card-footer-item button is-danger is-fullwidth"> Delete </a>
+      </footer>
+    </div>
+  </div>
+
+  <p class="has-text-centered" *ngIf="inventory.all.length == 0"> No Inventory In The Store Yet  </p>
+
+</section>
+
+<section>
+  <div class="columns">
+    <div class="column"></div>
+    <div class="column">
+      <!-- add the INVENTORY button -->
+      <button class="button is-info is-fullwidth" (click)="add_modal()"> ADD INVENTORY </button>
+    </div>
+    <div class="column"></div>
+  </div>
+</section>
+  
+
+<!-- app footer -->
+<app-footer></app-footer> 
+
+
+
+
+<!-- the modal to add  -->
+<div class="modal" [class.is-active]="show_add_modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title has-text-centered"> ADD INVENTORY </p>
+        <button class="delete" aria-label="close" (click)="close_add_modal()"></button>
+      </header>
+      <section class="modal-card-body" style="margin: 10px 0px;">
+        
+        <div class="field">
+          <label class="label"> Name </label>
+          <div class="control">
+            <input class="input is-info" type="text" placeholder="Enter name" name="in_name" [(ngModel)]="edit_inventory.name">
+          </div>
+        </div>
+        
+        <div class="field">
+          <label class="label"> Cost </label>
+          <div class="control">
+            <input class="input is-info" type="text" placeholder="Enter Cost" name="cost" [(ngModel)]="edit_inventory.cost">
+          </div>
+        </div>
+        
+        <div class="field">
+          <label class="label"> Quantity </label>
+          <div class="control">
+            <input class="input is-info" type="text" placeholder="Enter Quantity" name="quantity" [(ngModel)]="edit_inventory.quantity">
+          </div>
+        </div>
+  
+        <div class="field">
+          <label class="label"> Category </label>
+          <div class="control">
+            <input class="input is-info" type="text" placeholder="Enter Category" name="category" [(ngModel)]="edit_inventory.category">
+          </div>
+        </div>
+  
+        <div class="field">
+          <label class="label"> Type </label>
+          <div class="control">
+            <input class="input is-info" type="text" placeholder="Enter type" name="type" [(ngModel)]="edit_inventory.type">
+          </div>
+        </div>
+
+  
+        <br>
+        <div class="notification is-danger" *ngIf="show_msg == 'ERROR'">
+            Inventory Cound Not Be Added Successfully. Try Again.
+        </div>
+        <div class="notification is-success" *ngIf="show_msg == 'SUCCESS'">
+            Inventory Added Successfully
+        </div>
+        <br>
+
+        <!-- add the penalty button -->
+        <button class="button is-info is-fullwidth" (click)="add()"> SAVE </button>
+  
+        
+      </section>
+    </div>
+  </div>
