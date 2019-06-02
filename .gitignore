@@ -46,3 +46,6 @@ testem.log
 Thumbs.db
 
 /mortela/test
+/mortela/data
+
+.todo

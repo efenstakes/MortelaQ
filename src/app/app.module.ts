@@ -13,6 +13,7 @@ import { OrderModule } from './layouts/order/order.module'
 import { InventoryModule } from './layouts/inventory/inventory.module'
 import { ExpenseModule } from './layouts/expense/expense.module'
 import { PenaltyModule } from './layouts/penalty/penalty.module';
+import { ViewsModule } from "./layouts/views/views.module";
 
 import { AboutComponent } from './layouts/about/about.component'
 
@@ -35,7 +36,10 @@ import { AboutComponent } from './layouts/about/about.component'
     OrderModule,
     InventoryModule, 
     ExpenseModule,
-    PenaltyModule
+    PenaltyModule,
+
+    // shared views
+    ViewsModule
 
   ],
   providers: [],

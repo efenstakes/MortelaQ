@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AboutComponent } from './layouts/about/about.component'
 
 const routes: Routes = [
-  { path: '', redirectTo: 'user/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/user/login', pathMatch: 'full' }, // 'user/login'
   { path: 'about', component: AboutComponent }
 ];
 
