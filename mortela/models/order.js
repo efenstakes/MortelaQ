@@ -4,6 +4,7 @@
 // include internal libraries/modules
 const Models = require('../config/database')
 const Order = Models.Order
+const Product = Models.Product
 
 
 // add an order
@@ -26,18 +27,19 @@ exports.delete = async(id) => {
 
 // clear an order
 exports.clear = async(id) => {
-    return await Order.update({ _id: order.id }, { is_cleared: true })
+    return await Order.update({ _id: id }, { $set: { is_cleared: true } })
 }
 
 // update an order
 exports.update = async(order) => {
-    return await Order.update({ _id: order.id }, {
+    return await Order.update({ _id: order._id }, {
         $set: {
             table_no: order.table_no,
             is_cleared: order.is_cleared,
             is_special: order.is_special,
             type: order.type,
-            cashier_id: order.cashier_id
+            cashier_id: order.cashier_id,
+            items: order.items
         }
     })
 }
@@ -45,7 +47,14 @@ exports.update = async(order) => {
 
 // get an order details by id 
 exports.details = async(id) => {
-    return await Order.findOne({ _id: id })
+    let details: {}
+    let order = await Order.findOne({ _id: id })
+    let product_ids = order.items.map((itm)=> itm.id) 
+
+    let products = await Product.find({ _id: { $in: {[ product_ids ]} } })
+    all.push({ ...item, products: products })
+
+    return details
 }
 
 // get all order  

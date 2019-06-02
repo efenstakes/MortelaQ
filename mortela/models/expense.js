@@ -13,7 +13,8 @@ exports.add = async(expense) => {
         item: expense.item,
         cost: expense.cost,
         description: expense.description,
-        manager_id: expense.manager_id
+        manager_id: expense.manager_id,
+        added_on: new Date()
     })
 }
 
@@ -25,7 +26,7 @@ exports.delete = async(id) => {
 
 // update an expense
 exports.update = async(expense) => {
-    return await Expense.update({ _id: expense.id }, {
+    return await Expense.update({ _id: expense._id }, {
         $set: {
             item: expense.item,
             cost: expense.cost,

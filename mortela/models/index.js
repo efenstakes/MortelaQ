@@ -6,6 +6,7 @@ const Inventory = require('./inventory')
 const Product = require('./product')
 const Order = require('./order')
 const User = require('./user')
+const Penalty = require('./penalty')
 
 
 // export the controllers
@@ -14,5 +15,6 @@ module.exports = {
     Inventory,
     Product,
     Order,
-    User
+    User,
+    Penalty
 }

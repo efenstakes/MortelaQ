@@ -11,6 +11,8 @@ let Product = new Datastore({ filename: './mortela/data/products.qdb', autoload:
 let Order = new Datastore({ filename: './mortela/data/orders.qdb', autoload: true })
 let Inventory = new Datastore({ filename: './mortela/data/inventory.qdb', autoload: true })
 let Expense = new Datastore({ filename: './mortela/data/espenses.qdb', autoload: true })
+let Penalty = new Datastore({ filename: './mortela/data/penalties.qdb', autoload: true })
+
 
 // 
 const db = {
@@ -18,7 +20,8 @@ const db = {
     Product,
     Order,
     Inventory,
-    Expense
+    Expense,
+    Penalty
 }
 
 

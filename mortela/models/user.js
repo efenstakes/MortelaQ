@@ -12,7 +12,7 @@ exports.add = async(user) => {
     const record = await User.insert({
         name: user.name,
         password: user.password,
-        priviledge: user.priviledge,
+        role: user.role,
         salary: user.salary,
         added_on: new Date()
     })
@@ -27,11 +27,11 @@ exports.delete = async(id) => {
 
 // update a user
 exports.update = async(user) => {
-    return await User.update({ _id: user.id }, {
+    return await User.update({ _id: user._id }, {
         $set: {
             name: user.name,
             password: user.password,
-            priviledge: user.priviledge,
+            role: user.role,
             salary: user.salary
         }
     })
@@ -40,7 +40,7 @@ exports.update = async(user) => {
 
 // update a user password
 exports.reset_password = async(user) => {
-    return User.update({ _id: user.id }, { $set: { password: user.password } })
+    return User.update({ _id: user._id }, { $set: { password: user.password } })
 }
 
 // get user details by id 

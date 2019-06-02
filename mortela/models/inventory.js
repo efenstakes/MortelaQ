@@ -14,7 +14,8 @@ exports.add = async(inventory) => {
         cost: inventory.cost,
         quantity: inventory.quantity,
         category: inventory.category,
-        type: inventory.type
+        type: inventory.type,
+        added_on: inventory.added_on
     })
 }
 
@@ -26,7 +27,7 @@ exports.delete = async(id) => {
 
 // update an inventory
 exports.update = async(inventory) => {
-    return await Inventory.update({ _id: id }, {
+    return await Inventory.update({ _id: inventory._id }, {
         $set: {
             cost: inventory.cost,
             quantity: inventory.quantity,

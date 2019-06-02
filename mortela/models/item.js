@@ -21,25 +21,28 @@ exports.add = async(item) => {
 
 // delete an item
 exports.delete = async(id) => {
-    return await Item.destroy({ where: { id: id } })
+    return await Item.destroy({ _id: id })
 }
 
 
 // update an item
 exports.update = async(item) => {
-    return await Item.update({
-        cost: item.cost,
-        quantity: item.quantity,
-        meal: item.meal,
-        category: item.category,
-        type: item.type
-    }, { where: { id: item.id } })
+    return await Item.update({ _id: item._id },
+        {
+            $set: {
+                cost: item.cost,
+                quantity: item.quantity,
+                meal: item.meal,
+                category: item.category,
+                type: item.type
+            }
+        })
 }
 
 
 // get an item details by id 
 exports.details = async(id) => {
-    return await Item.findOne({ where: { id: id } })
+    return await Item.findOne({ _id: id })
 }
 
 // get all item  
