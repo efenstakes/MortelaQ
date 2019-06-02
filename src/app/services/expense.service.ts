@@ -2,25 +2,25 @@ import { Injectable } from '@angular/core';
 
 import { ElectronService } from 'ngx-electron'
 
+import { UserFixService } from "./user-fix.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExpenseService {
-
-
-  constructor(private electronService: ElectronService) { }
+  
+  constructor(private electronService: ElectronService, private userService: UserFixService) {  }
 
   
   // add
-  add(inventory) {
-    return this.electronService.ipcRenderer.sendSync('add-expense', { inventory })
+  add(expense) {
+    return this.electronService.ipcRenderer.sendSync('add-expense', { expense, manager: this.userService.get_current_user() })
   }
 
 
   // delete
-  delete(inventory) {
-    return this.electronService.ipcRenderer.sendSync('delete-expense', { inventory })
+  delete(id) {
+    return this.electronService.ipcRenderer.sendSync('delete-expense', { id, manager: this.userService.get_current_user() })
   }
 
 

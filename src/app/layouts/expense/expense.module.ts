@@ -1,21 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from "@angular/forms";
 
+// module with views like app footer nav etc
+import { ViewsModule } from "../views/views.module";
 
 // rouitng
 import { ExpenseRoutingModule } from './expense-routing.module'
 
 // views
-import { AddComponent } from './add/add.component';
 import { ViewComponent } from './view/view.component';
 import { MainComponent } from './main/main.component';
 
 @NgModule({
   declarations: [
-                  AddComponent, ViewComponent, MainComponent
+                  ViewComponent, MainComponent
                 ],
   imports: [
-    CommonModule, ExpenseRoutingModule
+    CommonModule, FormsModule, ExpenseRoutingModule, ViewsModule
   ]
 })
 export class ExpenseModule { }
