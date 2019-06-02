@@ -1,0 +1,28 @@
+<section class="section">
+
+    <div class="columns">
+          <div class="column is-3 is-offset-1">
+       <a class="button is-info is-outlined" id="back_btn" (click)="go_back()"> BACK </a>
+       <br><br>  
+       <p id="logo"> MORTELLA Q </p>
+    </div>
+      <div class="column is-2 is-offset-1"></div>
+      <div class="column is-3 is-offset-1">
+        
+        <div class="columns">
+            <div class="column is-5 is-offset-1">
+                <figure class="image is-128x128">
+                    <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
+                </figure>
+            </div>
+            <div class="column is-5 is-offset-1">
+              <br>
+              <p><strong> {{ user.name | uppercase  }} </strong></p>
+              <p><strong> {{ user.role }} </strong></p>
+              <button class="button is-danger is-outlined" (click)="log_out()"> LOGOUT </button>
+            </div>
+        </div>
+      </div>
+    </div>
+
+</section>
