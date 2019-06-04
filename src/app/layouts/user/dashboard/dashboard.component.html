@@ -7,7 +7,7 @@
       <br>
       <div class="columns">
           <div class="column is-9">
-              <input class="input is-fullwidth" type="text" placeholder="Search An Item" [(ngModel)]="search_term">
+              <input class="input is-info is-fullwidth" type="text" placeholder="Search An Item" (keyup)="filter_products($event)"> <!-- [(ngModel)]="search_term"> -->
           </div>
           <div class="column is-4">
             
@@ -29,7 +29,10 @@
       </div>
   </div>
   <div class="column is-3 is-offset-1">
+
       <h1><strong> ORDER ITEMS </strong></h1>
+      <br>
+
   </div>          
 </div>
 <div class="columns">
@@ -46,7 +49,7 @@
           </thead>
           <tbody id="product_list">
 
-            <tr *ngFor="let product of products.products">
+            <tr *ngFor="let product of products.products" (click)="add_to_order(product)">
               <td> {{ product.name }} </td>
               <td> {{ product.cost }} </td>
               <td> {{ product.quantity }} </td>
@@ -63,6 +66,7 @@
   </div>
   <!-- details of the order currently being placed -->
   <div class="column is-3 is-offset-1 long_display" id="order_details">
+
     
     <p class="has-text-centered" *ngIf="order.items.length < 1">
       <i> No Order Placed Yet </i> 
@@ -89,8 +93,38 @@
   </div>
   <div class="column is-3 is-offset-1">
 
-    <p> Number Of Items: {{ order.items.length }} </p>
-    <p> Cost Of Items: cost </p><br>
+      <div class="columns">
+
+        <div class="field column is-6">
+            <div class="control">
+              <label for="is_special" class="label"> Is Order Special </label>
+              <div class="select is-info">
+                <select [(ngModel)]="order.is_special" id="is_special">
+                  <option disabled> IS ORDER SPECIAL </option>
+                  <option> YES </option>
+                  <option selected> NO </option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="field column is-6">
+            <div class="control">
+              <label for="order_type" class="label"> Order Type </label>
+              <div class="select is-info">
+                <select [(ngModel)]="order.type" id="order_type">
+                  <option disabled> ORDER TYPE </option>
+                  <option selected> IN HOUSE </option>
+                  <option> TAKE AWAY </option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+    </div>
+
+    <p> Number Of Items: {{ order_summary.count }} </p>
+    <p> Cost Of Items: {{ order_summary.cost }}  </p><br>
     <button class="button is-info is-fullwidth" (click)="print_order()"> PRINT ORDER </button>
 
   </div>

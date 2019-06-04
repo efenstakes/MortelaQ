@@ -17,9 +17,10 @@ export class DashboardComponent implements OnInit {
 
   search_term: string = ''
 
-  order_x = { id: 99999, table_no: null, is_cleared: null, is_special: false, type: '', cashier_id: null, items: [] }
+  order_x = { id: null, table_no: null, is_cleared: false, is_special: 'NO', type: 'IN HOUSE', cashier_id: null, items: [] }
   // model of an order
   order: any = this.order_x
+  order_summary: any = { cost: 0, count: 0 }
 
   show_clear_order_modal: boolean = false
   matched_orders: any = []
@@ -94,11 +95,55 @@ export class DashboardComponent implements OnInit {
     }
 
     this.products.products = this.products.all.filter((product)=> {
-                                  return product.category == term || product.type == term || product.meal == term
+                                  return product.category == term || product.type == term || 
+                                  product.meal == term || (product.name.search(term) > -1)
     })
 
   }
 
+  // add a product to the order
+  add_to_order(product) {
+    // if its a new order, set defaults before adding items
+    if( !this.order.id ) {
+      this.order.is_cleared = false 
+    }
+    // if a product quantity is zero, return
+    if( product.quantity < 1 ) return
+
+
+    let quantity = 1
+    let found = this.order.items.find((itm)=> itm.product._id == product._id)
+    
+    if( found ) {
+      quantity += found.quantity
+      this.order.items = this.order.items.filter((itm)=> itm.product._id != found.product._id)
+    }
+    this.order.items.push({ product: product, ...{ quantity: quantity } })
+    this.productService.update_quantity({ id: product._id, quantity: (product.quantity-1) })
+    console.log('{ id: product._id, quantity: --product.quantity }', { id: product._id, quantity: (product.quantity-1) })
+    // console.log('this.order.items', this.order.items)
+    this.get_all_products()
+    this.set_order_summary()
+  }
+
+  /*
+      let quantity = 1
+    let found = this.order.items.find((itm)=> itm.id == product._id)
+    
+    if( found ) {
+      quantity += found.quantity
+      this.order.items = this.order.items.filter((itm)=> itm.id != found.id)
+    }
+    this.order.items.push({ id: product._id, quantity: quantity })
+    */
+
+  set_order_summary() {
+    this.order_summary = {
+      count: this.order.items.map((itm)=> itm.quantity).reduce((itm_1, itm_2)=> itm_1 + itm_2, 0),
+      cost:  this.order.items.map((itm)=> itm.quantity*itm.product.cost).reduce((itm_1, itm_2)=> itm_1 + itm_2, 0)
+    }
+    // console.log('this.order_summary', this.order_summary)
+  }
 
 
   go_to_expenses() { console.log('go_to_expenses',)

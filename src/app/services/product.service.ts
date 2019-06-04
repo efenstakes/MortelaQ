@@ -24,7 +24,7 @@ export class ProductService {
   }
 
   // update
-  update_quantity(product) {
+  update_quantity(product) { console.log('update prod', product)
     return this.electronService.ipcRenderer.sendSync('edit-product-quantity', { product, manager: this.userService.get_current_user()  })
   }
 

@@ -47,11 +47,11 @@ exports.update = async(order) => {
 
 // get an order details by id 
 exports.details = async(id) => {
-    let details: {}
+    let details = {}
     let order = await Order.findOne({ _id: id })
     let product_ids = order.items.map((itm)=> itm.id) 
 
-    let products = await Product.find({ _id: { $in: {[ product_ids ]} } })
+    let products = await Product.find({ _id: { $in: [ product_ids ] } })
     all.push({ ...item, products: products })
 
     return details

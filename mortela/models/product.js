@@ -42,7 +42,7 @@ exports.update = async(item) => {
 
 // update an item's quantity only
 exports.update_quantity = async(item) => {
-    return await Product.update({ _id: item._id }, {
+    return await Product.update({ _id: item.id }, {
         $set: {
             quantity: item.quantity
         }

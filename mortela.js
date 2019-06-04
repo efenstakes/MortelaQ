@@ -467,11 +467,6 @@ ipcMain.on('edit-product', (event, args) => {
 // edit quantity
 ipcMain.on('edit-product-quantity', (event, args) => {
     console.log('edit-product-quantity', args)
-    
-    if( args.manager.role != 'MANAGER' && args.manager.role != 'ADMIN' ) {
-        event.returnValue = { saved: false }
-        return
-    }
 
     Models.Product.update_quantity(args.product)
                     .then((product)=> {

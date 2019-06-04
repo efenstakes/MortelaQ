@@ -15,7 +15,7 @@ import { ProductService } from '../../../services/product.service'
 export class ViewComponent implements OnInit {
   staff : any = { id: null }
 
-  orders: { original: [], orders: [] }
+  orders: { all: [], orders: [] }
 
   constructor(
               private router: Router, private activatedRoute: ActivatedRoute, 
@@ -46,8 +46,8 @@ export class ViewComponent implements OnInit {
 
   // get all orders for this staff
   get_staff_orders() {
-    console.log(this.orderService.all_for_staff({ id: this.staff['id'] }))
-    this.orderService.all_for_staff({ id: this.staff['id'] })
+    console.log(this.orderService.all())
+    this.orderService.all()
   }
 
   // redirect to the previous page
